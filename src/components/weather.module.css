@@ -1,0 +1,8 @@
+.weather-container {
+  min-height: var(--card-height);
+  border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
+  border-radius: var(--card-radius);
+
+  padding: 1rem;
+  
+}

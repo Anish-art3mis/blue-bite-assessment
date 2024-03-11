@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 
 const Root = () => (
-    <div>
+    <div className='bg-red-500'>
         <Link to="/page-one">Page One</Link><br />
         <Link to="/page-two">Page Two</Link><br />
         <Link to="/page-three">Page Three</Link>
