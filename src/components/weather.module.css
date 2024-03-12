@@ -1,8 +1,43 @@
 .weather-container {
-  min-height: var(--card-height);
-  border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
-  border-radius: var(--card-radius);
+    --weather-bg-color: white;
+    height: var(--card-height);
+    border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
+    border-radius: var(--card-radius);
+    background-color: var(--weather-bg-color);
+    padding: 0.75rem;
+}
 
-  padding: 1rem;
-  
+.current-weather-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.current-weather-condition-box {
+    display: flex;
+}
+
+.current-weather-condition-box > img {
+    height: 3rem;
+}
+
+.cw-temp {
+    font-size: 1.75rem;
+}
+
+.upcoming-weather-container {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.upcoming-weather {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.upcoming-weather > img {
+    width: 2.75rem;
+    height: auto;
 }

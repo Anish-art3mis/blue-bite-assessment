@@ -1,4 +1,4 @@
-import { IComponent } from "./component-types";
+import type { AppComponents } from "./component-types";
 
 export interface PageVariable {
     name: string;
@@ -9,9 +9,9 @@ export interface PageVariable {
 export interface PageData {
     lists: Array<{
         id: number;
-        components: Array<IComponent["id"]>;
+        components: Array<AppComponents["id"]>;
     }>;
-    components: Array<IComponent>;
+    components: Array<AppComponents>;
     variables?: Array<PageVariable>;
 }
 

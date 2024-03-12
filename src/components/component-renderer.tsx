@@ -1,11 +1,11 @@
-import { IComponent } from "../types/component-types";
+import type { AppComponents } from "../types/component-types";
 import Button from "./button";
 import Condition from "./condition";
 import Image from "./image";
 import Weather from "./weather";
 
-const getComponent = (comObj: IComponent): React.FC<any> => {
-    switch (comObj.type) {
+const getComponentByType = (componentType: AppComponents["type"]): React.FC<any> => {
+    switch (componentType) {
         case "image":
             return Image;
         case "weather":
@@ -16,7 +16,7 @@ const getComponent = (comObj: IComponent): React.FC<any> => {
             return Condition;
 
         default:
-            return () => <>Invalid component type {(comObj as any).type}</>;
+            return () => <>Invalid component type {(componentType as any).type}</>;
     }
 };
-export default getComponent;
+export default getComponentByType;

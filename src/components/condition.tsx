@@ -1,6 +1,6 @@
-import { usePageContext } from "../context/list-context";
+import { useEffect } from "react";
+import { usePageContext } from "../context/page-context";
 import { ConditionComponent } from "../types/component-types";
-import { InnerListRenderer } from "./list-renderer";
 
 export interface ConditionProps extends ConditionComponent {}
 
@@ -8,18 +8,11 @@ const Condition: React.FC<ConditionProps> = ({ children, options }) => {
     const { value, variable } = options;
     const listCtx = usePageContext();
 
-    if (listCtx.variables[variable] === value) {
-        let childs = Array.isArray(children) ? children : [children];
-
-        return (
-            <>
-                {childs.map((childListId) => {
-                    let list = listCtx.lists.find((cm) => cm.id === childListId);
-                    return <InnerListRenderer list={list!} components={listCtx.components} />;
-                })}
-            </>
-        );
-    }
+    useEffect(() => {
+        if (listCtx.variables[variable] === value) {
+            listCtx.setRenderedListId(children);
+        }
+    }, [children, listCtx, value, variable]);
 
     return null;
 };

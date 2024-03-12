@@ -1,18 +1,19 @@
 .btn-container {
-  height: var(--card-height);
-  border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
-  border-radius: var(--card-radius);
+    height: var(--card-height);
+    border: var(--card-border-width) var(--card-border-style) var(--card-border-color);
+    border-radius: var(--card-radius);
 
-  background-color: var(--btn-bg-color);
-  color: var(--btn-text-color);
-  display: flex;
-  padding: var(--padding);
+    background-color: var(--btn-bg-color);
+    color: var(--btn-text-color);
+    display: flex;
+    padding: var(--padding);
 
-  font-size: 1rem;
-  justify-content: space-between
+    font-size: 1rem;
+    justify-content: space-between;
+
+    cursor: pointer;
 }
 
 .btn-icon {
-  align-self: end;
-  border: 1px solid red;
+    align-self: end;
 }

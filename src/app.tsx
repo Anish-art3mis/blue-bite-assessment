@@ -1,43 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router";
-import type { PageData } from "./types/type";
-
 import ListRenderer from "./components/list-renderer";
+import { withAppLayout } from "./components/app-layout";
+import CardShimer from "./components/card-shimer";
+import { usePageData } from "./hooks/use-page-data";
 
 const App = () => {
     const { id } = useParams<{ id: string }>();
-    const [pageData, setPageData] = useState<PageData>();
+    const { data: pageData, isLoading, error } = usePageData(id);
 
-    useEffect(() => {
-        const fetchPageData = async () => {
-            const response = await fetch(`http://localhost:3030/page/${id}`);
-            if (!response.ok) {
-                console.error("Failed to fetch", response);
-                return;
-            }
-            const pData = await response.json();
-            console.log("row data", pData);
-            setPageData(pData.data as PageData);
-        };
+    if (isLoading)
+        return (
+            <>
+                <CardShimer />
+                <CardShimer />
+                <CardShimer />
+            </>
+        );
 
-        fetchPageData();
-    }, [id]);
+    if (pageData) return <ListRenderer pageData={pageData} />;
 
-    if (!pageData) return <>Loading...</>;
-
-    return (
-        <div
-            style={{
-                width: "500px",
-                border: "1px solid black",
-                padding: "2rem",
-            }}
-        >
-            <div className="bg-red-500">
-                <ListRenderer pageData={pageData} />
-            </div>
-        </div>
-    );
+    return <p>something went wrong "{error?.message ?? "Server error"}"</p>;
 };
 
-export default App;
+export default withAppLayout(App);

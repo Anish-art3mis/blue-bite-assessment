@@ -20,7 +20,11 @@ export interface ConditionComponent {
     id: number;
     type: "condition";
     options: { variable: string; value: string };
-    children: number | number[];
+    children: number;
 }
 
-export type IComponent = WeatherComponent | ImageComponent | ButtonComponent | ConditionComponent;
+export type AppComponents =
+    | WeatherComponent
+    | ImageComponent
+    | ButtonComponent
+    | ConditionComponent;

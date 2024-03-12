@@ -1,211 +1,268 @@
-const VALUES = require('../values');
+const VALUES = require("../values");
 
 module.exports = {
     variables: [
         {
-            name: 'show_image',
-            type: 'string',
-            initialValue: 'hide',
+            name: "show_image",
+            type: "string",
+            initialValue: "hide",
         },
         {
-            name: 'location',
-            type: 'string',
-            initialValue: 'ny',
+            name: "location",
+            type: "string",
+            initialValue: "ny",
         },
     ],
     lists: [
         {
+            // new york no img
             id: 0,
-            components: [3, 4, 8, 9, 10]
+            components: [
+                1,
+                18, //new york weather,
+                10, // button ca
+                11, // button ch
+                4, // condition list id 1 - with img
+                14, // condition ca no img (list id 2)
+                16, // condition ch no img (list id 3)
+            ],
         },
         {
+            // new york with img
             id: 1,
-            components: [1],
+            components: [
+                2,
+                21, // image
+                18, //new york weather,
+                10, // button ca
+                11, // button ch
+                3, // condition list id 0 (new york no img)
+                14, // condition ca no img (list id 2)
+                16, // condition ch no img (list id 3)
+            ],
         },
         {
+            // ca no img
             id: 2,
-            components: [2],
+            components: [
+                19, // weather - ca
+                9, // button ny
+                11, // button ch
+                12, // condition new york
+                16, // condition chicogo
+            ],
         },
         {
+            // ch no with img
             id: 3,
-            components: [14, 11, 7, 6],
-        },
-        {
-            id: 4,
-            components: [15, 12, 5, 7],
-        },
-        {
-            id: 5,
-            components: [16, 13, 6, 5],
-        },
-        {
-            id: 6,
-            components: [17],
-        },
-        {
-            id: 7,
-            components: [18],
-        },
-        {
-            id: 8,
-            components: [19],
+            components: [
+                20, // weather - ca
+                9, // button ny
+                10, // button ca
+                12, // condition new york
+                14, // condition ca no img (list id 2)
+            ],
         },
     ],
     components: [
         {
             id: 1,
-            type: 'button',
+            type: "button",
             options: {
-                text: 'Show',
-                variable: 'show_image',
-                value: 'show',
+                text: "Show",
+                variable: "show_image",
+                value: "show",
             },
         },
         {
             id: 2,
-            type: 'button',
+            type: "button",
             options: {
-                text: 'Hide',
-                variable: 'show_image',
-                value: 'hide',
+                text: "Hide",
+                variable: "show_image",
+                value: "hide",
             },
         },
+        //---------------
+
+        // --------- show hide condition
         {
             id: 3,
-            type: 'condition',
+            type: "condition",
             options: {
-                variable: 'show_image',
-                value: 'hide',
+                variable: "show_image",
+                value: "hide",
             },
-            children: 1,
+            children: 0,
         },
         {
             id: 4,
-            type: 'condition',
+            type: "condition",
             options: {
-                variable: 'show_image',
-                value: 'show',
+                variable: "show_image",
+                value: "show",
             },
-            children: 2,
+            children: 1,
         },
+        // ---------------
         {
             id: 5,
-            type: 'button',
+            type: "condition",
             options: {
-                text: 'New York',
-                variable: 'location',
-                value: 'ny',
-            },
-        },
-        {
-            id: 6,
-            type: 'button',
-            options: {
-                text: 'San Francisco',
-                variable: 'location',
-                value: 'ca',
-            },
-        },
-        {
-            id: 7,
-            type: 'button',
-            options: {
-                text: 'Chicago',
-                variable: 'location',
-                value: 'ch',
-            },
-        },
-        {
-            id: 8,
-            type: 'condition',
-            options: {
-                variable: 'location',
-                value: 'ny'
+                variable: "show_image",
+                value: "hide",
             },
             children: 3,
         },
         {
-            id: 9,
-            type: 'condition',
+            id: 6,
+            type: "condition",
             options: {
-                variable: 'location',
-                value: 'ca'
+                variable: "show_image",
+                value: "show",
             },
-            children: 4,
+            children: 2,
         },
+        // -----------------
+
         {
-            id: 10,
-            type: 'condition',
+            id: 7,
+            type: "condition",
             options: {
-                variable: 'location',
-                value: 'ch'
+                variable: "show_image",
+                value: "hide",
             },
             children: 5,
         },
         {
-            id: 11,
-            type: 'weather',
+            id: 8,
+            type: "condition",
             options: {
-                lon: VALUES.WEATHER_LOCATIONS[0].lon,
-                lat: VALUES.WEATHER_LOCATIONS[0].lat,
-            }
+                variable: "show_image",
+                value: "show",
+            },
+            children: 4,
+        },
+        // -----------------
+
+        // Weather buttons
+        {
+            id: 9,
+            type: "button",
+            options: {
+                text: "New York",
+                variable: "location",
+                value: "ny",
+            },
         },
         {
-            id: 12,
-            type: 'weather',
+            id: 10,
+            type: "button",
             options: {
-                lon: VALUES.WEATHER_LOCATIONS[1].lon,
-                lat: VALUES.WEATHER_LOCATIONS[1].lat,
-            }
+                text: "San Francisco",
+                variable: "location",
+                value: "ca",
+            },
+        },
+        {
+            id: 11,
+            type: "button",
+            options: {
+                text: "Chicago",
+                variable: "location",
+                value: "ch",
+            },
+        },
+
+        // ----------- Weather page condition
+        // -- new york
+        {
+            id: 12,
+            type: "condition",
+            options: {
+                variable: "location",
+                value: "ny",
+            },
+            children: 0,
         },
         {
             id: 13,
-            type: 'weather',
+            type: "condition",
             options: {
-                lon: VALUES.WEATHER_LOCATIONS[2].lon,
-                lat: VALUES.WEATHER_LOCATIONS[2].lat,
-            }
+                variable: "location",
+                value: "ny",
+            },
+            children: 1,
         },
+        // -- ca
         {
             id: 14,
-            type: 'condition',
+            type: "condition",
             options: {
-                variable: 'show_image',
-                value: 'show',
+                variable: "location",
+                value: "ca",
             },
-            children: 6,
+            children: 2,
         },
         {
             id: 15,
-            type: 'condition',
+            type: "condition",
             options: {
-                variable: 'show_image',
-                value: 'show',
+                variable: "location",
+                value: "ca",
             },
-            children: 7,
+            children: 3,
         },
+        // - chicago
         {
             id: 16,
-            type: 'condition',
+            type: "condition",
             options: {
-                variable: 'show_image',
-                value: 'show',
+                variable: "location",
+                value: "ch",
             },
-            children: 8,
+            children: 3,
         },
-        {
-            id: 17,
-            type: 'image',
-            options: VALUES.IMAGES[0],
-        },
+        // -- weather
         {
             id: 18,
-            type: 'image',
-            options: VALUES.IMAGES[1],
+            type: "weather",
+            options: {
+                lon: VALUES.WEATHER_LOCATIONS[0].lon,
+                lat: VALUES.WEATHER_LOCATIONS[0].lat,
+            },
         },
         {
             id: 19,
-            type: 'image',
+            type: "weather",
+            options: {
+                lon: VALUES.WEATHER_LOCATIONS[1].lon,
+                lat: VALUES.WEATHER_LOCATIONS[1].lat,
+            },
+        },
+        {
+            id: 20,
+            type: "weather",
+            options: {
+                lon: VALUES.WEATHER_LOCATIONS[2].lon,
+                lat: VALUES.WEATHER_LOCATIONS[2].lat,
+            },
+        },
+
+        // --- images
+        {
+            id: 21,
+            type: "image",
+            options: VALUES.IMAGES[0],
+        },
+        {
+            id: 22,
+            type: "image",
+            options: VALUES.IMAGES[1],
+        },
+        {
+            id: 23,
+            type: "image",
             options: VALUES.IMAGES[2],
         },
     ],

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { WeatherData } from "../types/type";
+import React from "react";
 import styles from "./weather.module.css";
 import cloudy from "../icons/cloudy.svg";
 import rain from "../icons/cloudy.svg";
 import clearDay from "../icons/clear-day.svg";
 import { WeatherComponent } from "../types/component-types";
-
-export interface WeatherProps extends WeatherComponent {}
+import CardShimer from "./card-shimer";
+import { useWeather } from "../hooks/use-weather";
+import { WeatherData } from "../types/models";
 
 function getIconFromCondition(condition: string) {
     let obj: Record<string, string> = {
@@ -17,75 +17,54 @@ function getIconFromCondition(condition: string) {
     return obj[condition];
 }
 
+export interface WeatherProps extends WeatherComponent {}
+
 const Weather: React.FC<WeatherProps> = ({ options: { lat, lon } }) => {
-    const [weather, setWeather] = useState<WeatherData>();
-    useEffect(() => {
-        const fetchWeatherData = async () => {
-            const response = await fetch(
-                `http://localhost:3030/integration/weather?lat=${lat}&lon=${lon}`
-            );
-            if (!response.ok) {
-                console.error("failed to fetch weather", response);
-                return;
-            }
-            setWeather((await response.json()).data as WeatherData);
-        };
+    const { data: weather, isLoading, error } = useWeather({ lat, lon });
 
-        fetchWeatherData();
-    }, [lat, lon]);
+    if (isLoading) return <CardShimer />;
 
-    if (!weather) return <>Loading...</>;
+    if (weather)
+        return (
+            <div className={styles["weather-container"]}>
+                <div className={styles["current-weather-box"]}>
+                    <div className={styles["current-weather-condition-box"]}>
+                        <img
+                            src={getIconFromCondition(weather.condition)}
+                            alt={weather.conditionName}
+                        />
+                        <div>
+                            <p className={styles["cw-temp"]}>
+                                {weather.temperature}&deg; {weather.unit}
+                            </p>
+                            <small>{weather.conditionName}</small>
+                        </div>
+                    </div>
+                    <p>{weather.location}</p>
+                </div>
+
+                <div className={styles["upcoming-weather-container"]}>
+                    {weather.upcomming.map((weather) => {
+                        return <UpcomingWeather key={weather.day} weather={weather} />;
+                    })}
+                </div>
+            </div>
+        );
+
     return (
         <div className={styles["weather-container"]}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", height: "4rem" }}>
-                    <img
-                        src={getIconFromCondition(weather.condition)}
-                        alt={weather.conditionName}
-                    />
-                    <div>
-                        <p
-                            style={{
-                                fontSize: "2rem",
-                            }}
-                        >
-                            {weather.temperature}&deg; {weather.unit}
-                        </p>
-                        <small>{weather.conditionName}</small>
-                    </div>
-                </div>
-                <p>{weather.location}</p>
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    flexWrap: "wrap",
-                }}
-            >
-                {weather.upcomming.map((upc) => {
-                    return (
-                        <div
-                            key={upc.day}
-                            style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
-                            <img
-                                src={getIconFromCondition(upc.condition)}
-                                style={{ width: "3rem" }}
-                                alt={upc.conditionName}
-                            />
-                            <small>{upc.day}</small>
-                        </div>
-                    );
-                })}
-            </div>
+            Something went wrong "{error?.message || "Server error"}"
         </div>
     );
 };
 
 export default Weather;
+
+const UpcomingWeather: React.FC<{ weather: WeatherData["upcomming"][number] }> = ({ weather }) => {
+    return (
+        <div key={weather.day} className={styles["upcoming-weather"]}>
+            <img src={getIconFromCondition(weather.condition)} alt={weather.conditionName} />
+            <label>{weather.day}</label>
+        </div>
+    );
+};

@@ -4,26 +4,29 @@
 
 body {
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 :root {
+    --app-bg-color: #f8f8f8;
     --padding: 1rem;
     /* Card */
     --card-height: 140px;
     --card-radius: 1rem;
     --card-border-width: 1px;
-    --card-border-color: black;
+    --card-border-color: LightGray;
     --card-border-style: solid;
 
     /* Button */
-    --btn-bg-color: #4169E1;
+    --btn-bg-color: #4169e1;
     --btn-text-color: white;
 }

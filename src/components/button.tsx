@@ -1,4 +1,4 @@
-import { usePageContext } from "../context/list-context";
+import { usePageContext } from "../context/page-context";
 import { ButtonComponent } from "../types/component-types";
 import styles from "./button.module.css";
 
